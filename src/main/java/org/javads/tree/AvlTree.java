@@ -1,4 +1,4 @@
-package org.javads.internal.tree;
+package org.javads.tree;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -9,48 +9,48 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class AvlTree<T extends Comparable<? super T>> extends BSTree<T> {
+public class AvlTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
 
     public AvlTree() {
         super();
     }
 
     @Override
-    public Node<T> insert(T value) {
+    public Node<E> insert(E value) {
         Objects.requireNonNull(value);
-        AvlNode<T> newNode = new AvlNode<>(value);
-        setRootNode(insert0((AvlNode<T>) getRootNode(), newNode));
+        AvlNode<E> newNode = new AvlNode<>(value);
+        setRootNode(insert0((AvlNode<E>) getRootNode(), newNode));
         return newNode;
     }
 
-    AvlNode<T> insert0(AvlNode<T> tNode, AvlNode<T> newNode) {
+    AvlNode<E> insert0(AvlNode<E> tNode, AvlNode<E> newNode) {
         if (tNode == null) {
             return newNode;
         } else if (tNode.getData().compareTo(newNode.getData()) > 0) {
-            tNode.setLeft(insert0((AvlNode<T>) tNode.getLeft(), newNode));
+            tNode.setLeft(insert0((AvlNode<E>) tNode.getLeft(), newNode));
         } else if (tNode.getData().compareTo(newNode.getData()) < 0) {
-            tNode.setRight(insert0((AvlNode<T>) tNode.getRight(), newNode));
+            tNode.setRight(insert0((AvlNode<E>) tNode.getRight(), newNode));
         } else {
             throw new RuntimeException(String.format("Duplicate value %s", newNode.getData()));
         }
         return reBalance(tNode);
     }
 
-    private AvlNode<T> reBalance(AvlNode<T> z) {
+    private AvlNode<E> reBalance(AvlNode<E> z) {
         z.updateHeight();
         int bal = z.getBalanceFactor();
         if (bal > 1) {
             if (heightOf(z.getRight().getRight()) > heightOf(z.getRight().getLeft())) {
                 z = rotateLeft(z);
             } else {
-                z.setRight(rotateRight((AvlNode<T>) z.getRight()));
+                z.setRight(rotateRight((AvlNode<E>) z.getRight()));
                 z = rotateLeft(z);
             }
         } else if (bal < -1) {
             if (heightOf(z.getLeft().getLeft()) > heightOf(z.getLeft().getRight())) {
                 z = rotateRight(z);
             } else {
-                z.setLeft(rotateLeft((AvlNode<T>) z.getLeft()));
+                z.setLeft(rotateLeft((AvlNode<E>) z.getLeft()));
                 z = rotateRight(z);
             }
         }
@@ -71,9 +71,9 @@ public class AvlTree<T extends Comparable<? super T>> extends BSTree<T> {
         return height;
     }
 
-    private AvlNode<T> rotateRight(AvlNode<T> y) {
-        AvlNode<T> x = (AvlNode<T>) y.getLeft();
-        AvlNode<T> z = (AvlNode<T>) x.getRight();
+    private AvlNode<E> rotateRight(AvlNode<E> y) {
+        AvlNode<E> x = (AvlNode<E>) y.getLeft();
+        AvlNode<E> z = (AvlNode<E>) x.getRight();
         x.setRight(y);
         y.setLeft(z);
         y.updateHeight();
@@ -81,9 +81,9 @@ public class AvlTree<T extends Comparable<? super T>> extends BSTree<T> {
         return x;
     }
 
-    private AvlNode<T> rotateLeft(AvlNode<T> y) {
-        AvlNode<T> x = (AvlNode<T>) y.getRight();
-        AvlNode<T> z = (AvlNode<T>) x.getLeft();
+    private AvlNode<E> rotateLeft(AvlNode<E> y) {
+        AvlNode<E> x = (AvlNode<E>) y.getRight();
+        AvlNode<E> z = (AvlNode<E>) x.getLeft();
         x.setLeft(y);
         y.setRight(z);
         y.updateHeight();
@@ -92,13 +92,13 @@ public class AvlTree<T extends Comparable<? super T>> extends BSTree<T> {
     }
 
     @Override
-    public void remove(T value) {
+    public void remove(E value) {
         super.remove(value);
-        reBalance((AvlNode<T>) getRootNode());
+        reBalance((AvlNode<E>) getRootNode());
     }
 
     @Override
-    public Optional<Node<T>> search(T value) {
+    public Optional<Node<E>> search(E value) {
         return super.search(value);
     }
 

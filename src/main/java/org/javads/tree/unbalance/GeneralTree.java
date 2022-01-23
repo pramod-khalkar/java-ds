@@ -1,8 +1,10 @@
-package org.javads.internal.tree.unbalance;
+package org.javads.tree.unbalance;
 
+import java.util.List;
 import java.util.Optional;
-import org.javads.internal.tree.AbstractTree;
-import org.javads.internal.tree.Node;
+import java.util.stream.Stream;
+import org.javads.tree.AbstractTree;
+import org.javads.tree.Node;
 
 /**
  * Date: 01/01/22
@@ -10,25 +12,25 @@ import org.javads.internal.tree.Node;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class GeneralTree<T> extends AbstractTree<T> {
+public class GeneralTree<E> extends AbstractTree<E> {
 
     public GeneralTree() {
         super();
     }
 
     @Override
-    public Node<T> insert(T value) {
+    public Node<E> insert(E value) {
         return insert(value, !isEmpty() ? getRootNode().getData() : value);
     }
 
-    public Node<T> insert(T value, T parent) {
-        Node<T> newGNode = new Node<>(value);
-        Node<T> parentGNode = new Node<>(parent);
+    public Node<E> insert(E value, E parent) {
+        Node<E> newGNode = new Node<>(value);
+        Node<E> parentGNode = new Node<>(parent);
         newGNode.setData(value);
         if (isEmpty() || parent == null) {
             setRootNode(newGNode);
         } else {
-            Node<T> parent_ = findParent(getRootNode(), parentGNode);
+            Node<E> parent_ = findParent(getRootNode(), parentGNode);
             if (parent_ != null) {
                 if (parent_.getLeft() == null) {
                     parent_.setLeft(newGNode);
@@ -36,7 +38,7 @@ public class GeneralTree<T> extends AbstractTree<T> {
                     if (parent_.getLeft().getRight() == null) {
                         parent_.getLeft().setRight(newGNode);
                     } else {
-                        Node<T> sibling = parent_.getLeft().getRight();
+                        Node<E> sibling = parent_.getLeft().getRight();
                         while (sibling.getRight() != null) {
                             sibling = sibling.getRight();
                         }
@@ -48,7 +50,7 @@ public class GeneralTree<T> extends AbstractTree<T> {
         return newGNode;
     }
 
-    private Node<T> findParent(Node<T> tNode, Node<T> searchingNode) {
+    private Node<E> findParent(Node<E> tNode, Node<E> searchingNode) {
         if (tNode.equals(searchingNode)) {
             return tNode;
         } else {
@@ -63,8 +65,8 @@ public class GeneralTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public void remove(T value) {
-        Node<T> tobeDeleted = new Node<>(value);
+    public void remove(E value) {
+        Node<E> tobeDeleted = new Node<>(value);
         if (!isEmpty()) {
             if (getRootNode().equals(tobeDeleted)) {
                 setRootNode(null);
@@ -74,7 +76,7 @@ public class GeneralTree<T> extends AbstractTree<T> {
         }
     }
 
-    private Node<T> delete0(Node<T> tNode, Node<T> deletingNode) {
+    private Node<E> delete0(Node<E> tNode, Node<E> deletingNode) {
         if (tNode == null) {
             return tNode;
         } else if (tNode.equals(deletingNode)) {
@@ -87,11 +89,11 @@ public class GeneralTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public Optional<Node<T>> search(T value) {
+    public Optional<Node<E>> search(E value) {
         return search0(getRootNode(), new Node<>(value));
     }
 
-    private Optional<Node<T>> search0(Node<T> tNode, Node<T> value) {
+    private Optional<Node<E>> search0(Node<E> tNode, Node<E> value) {
         if (tNode != null) {
             if (tNode.equals(value)) {
                 return Optional.of(tNode);
@@ -105,5 +107,45 @@ public class GeneralTree<T> extends AbstractTree<T> {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public void insert(E... elements) {
+
+    }
+
+    @Override
+    public void delete(E... elements) {
+
+    }
+
+    @Override
+    public Stream<E> preOrderTraverseStream() {
+        return null;
+    }
+
+    @Override
+    public Stream<E> inOrderTraverseStream() {
+        return null;
+    }
+
+    @Override
+    public Stream<E> postOrderTraverseStream() {
+        return null;
+    }
+
+    @Override
+    public List<E> preOrderTraverse() {
+        return null;
+    }
+
+    @Override
+    public List<E> postOrderTraverse() {
+        return null;
+    }
+
+    @Override
+    public List<E> inOrderTraverse() {
+        return null;
     }
 }

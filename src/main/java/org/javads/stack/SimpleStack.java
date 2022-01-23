@@ -1,5 +1,9 @@
-package org.javads.internal.stack;
+package org.javads.stack;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 import org.javads.internal.ArrayStorage;
 
 /**
@@ -14,7 +18,7 @@ public class SimpleStack<T> extends ArrayStorage<T> implements Stack<T> {
 
     public SimpleStack() {
         this(10);
-        this.index = 0;
+        this.index = -1;
     }
 
     public SimpleStack(int capacity) {
@@ -23,16 +27,18 @@ public class SimpleStack<T> extends ArrayStorage<T> implements Stack<T> {
 
     @Override
     public void push(T value) throws RuntimeException {
-        if (index < this.capacity) {
+        if ((index + 1) < this.capacity) {
             this.elementData[++index] = value;
         } else {
-            throw new RuntimeException("Stack is full");
+            //throw new RuntimeException("Stack is full");
+            growStorage();
+            push(value);
         }
     }
 
     @Override
     public T pop() throws RuntimeException {
-        if (index >= 0) {
+        if (!isEmpty()) {
             T popedElement = (T) this.elementData[index];
             this.elementData[index] = null;
             index--;
@@ -45,5 +51,25 @@ public class SimpleStack<T> extends ArrayStorage<T> implements Stack<T> {
     public void clear() {
         resetStorage();
         index = 0;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return index < 0;
+    }
+
+    @SafeVarargs
+    @Override
+    public final void push(T... elements) {
+        Arrays.stream(elements).forEach(this::push);
+    }
+
+    @Override
+    public Stream<T> popStream() {
+        List<T> list = new ArrayList<>();
+        while (!this.isEmpty()) {
+            list.add(this.pop());
+        }
+        return list.stream();
     }
 }

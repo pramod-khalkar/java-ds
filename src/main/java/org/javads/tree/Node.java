@@ -1,4 +1,4 @@
-package org.javads.internal.tree;
+package org.javads.tree;
 
 import java.util.Objects;
 

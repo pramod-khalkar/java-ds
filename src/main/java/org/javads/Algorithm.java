@@ -1,4 +1,4 @@
-package org.javads.internal;
+package org.javads;
 
 /**
  * Date: 19/01/22

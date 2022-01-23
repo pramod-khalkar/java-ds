@@ -1,4 +1,4 @@
-package org.javads.internal.tree;
+package org.javads.tree;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -9,8 +9,8 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public abstract class AbstractTree<T> implements Tree<T> {
-    private Node<T> root;
+public abstract class AbstractTree<E> implements Tree<E> {
+    private Node<E> root;
 
     protected AbstractTree() {
         this.root = null;
@@ -21,28 +21,28 @@ public abstract class AbstractTree<T> implements Tree<T> {
         return getRootNode() == null;
     }
 
-    protected Node<T> getRootNode() {
+    protected Node<E> getRootNode() {
         return this.root;
     }
 
-    protected void setRootNode(Node<T> root) {
+    protected void setRootNode(Node<E> root) {
         this.root = root;
     }
 
     @Override
-    public Optional<Node<T>> search(T value) {
+    public Optional<Node<E>> search(E value) {
         Objects.requireNonNull(value);
         return Optional.empty();
     }
 
     @Override
-    public Node<T> insert(T value) {
+    public Node<E> insert(E value) {
         Objects.requireNonNull(value);
         return new Node<>(value);
     }
 
     @Override
-    public void remove(T value) {
+    public void remove(E value) {
         Objects.requireNonNull(value);
     }
 

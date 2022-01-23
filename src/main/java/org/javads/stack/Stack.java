@@ -1,6 +1,7 @@
-package org.javads.internal.stack;
+package org.javads.stack;
 
-import org.javads.internal.Algorithm;
+import java.util.stream.Stream;
+import org.javads.Algorithm;
 
 /**
  * Date: 31/12/21
@@ -14,4 +15,10 @@ public interface Stack<T> extends Algorithm {
     T pop();
 
     void clear();
+
+    boolean isEmpty();
+
+    void push(T... elements);
+
+    Stream<T> popStream();
 }

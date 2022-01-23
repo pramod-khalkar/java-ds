@@ -1,11 +1,13 @@
-package org.javads.internal.tree.unbalance;
+package org.javads.tree.unbalance;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
-import org.javads.internal.tree.AbstractTree;
-import org.javads.internal.tree.Node;
-import org.javads.internal.tree.NodePosition;
+import java.util.stream.Stream;
+import org.javads.tree.AbstractTree;
+import org.javads.tree.Node;
+import org.javads.tree.NodePosition;
 
 /**
  * Date: 04/01/22
@@ -13,7 +15,7 @@ import org.javads.internal.tree.NodePosition;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class BinaryTree<T> extends AbstractTree<T> {
+public class BinaryTree<E> extends AbstractTree<E> {
 
     private final Random random;
 
@@ -23,14 +25,14 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public Node<T> insert(T value) {
-        Node<T> newNode = super.insert(value);
-        Node<T> tNode = randomInsert(getRootNode(), newNode, (random.nextInt(2) == 0) ? NodePosition.LEFT : NodePosition.RIGHT);
+    public Node<E> insert(E value) {
+        Node<E> newNode = super.insert(value);
+        Node<E> tNode = randomInsert(getRootNode(), newNode, (random.nextInt(2) == 0) ? NodePosition.LEFT : NodePosition.RIGHT);
         setRootNode(tNode);
         return newNode;
     }
 
-    private Node<T> randomInsert(Node<T> node, Node<T> newNode, NodePosition nodePosition) {
+    private Node<E> randomInsert(Node<E> node, Node<E> newNode, NodePosition nodePosition) {
         if (node == null) {
             return newNode;
         } else if (nodePosition == NodePosition.LEFT) {
@@ -51,14 +53,14 @@ public class BinaryTree<T> extends AbstractTree<T> {
         return node;
     }
 
-    public Node<T> insert(T value, T parent, NodePosition nodePosition) {
+    public Node<E> insert(E value, E parent, NodePosition nodePosition) {
         Objects.requireNonNull(value);
         Objects.requireNonNull(parent);
-        Node<T> newNode = new Node<>(value);
+        Node<E> newNode = new Node<>(value);
         if (isEmpty()) {
             setRootNode(newNode);
         } else {
-            Optional<Node<T>> parentNode = search0(getRootNode(), new Node<>(parent));
+            Optional<Node<E>> parentNode = search0(getRootNode(), new Node<>(parent));
             if (parentNode.isPresent()) {
                 parentInsert(newNode, parentNode.get(), nodePosition);
             } else {
@@ -68,7 +70,7 @@ public class BinaryTree<T> extends AbstractTree<T> {
         return newNode;
     }
 
-    private void parentInsert(Node<T> newNode, Node<T> parentNode, NodePosition nodePosition) {
+    private void parentInsert(Node<E> newNode, Node<E> parentNode, NodePosition nodePosition) {
         if (parentNode.equals(newNode)) {
             throw new RuntimeException(String.format("Duplicate value %s", newNode.getData()));
         } else {
@@ -83,18 +85,18 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public Optional<Node<T>> search(T value) {
+    public Optional<Node<E>> search(E value) {
         super.search(value);
         return search0(getRootNode(), new Node<>(value));
     }
 
-    private Optional<Node<T>> search0(Node<T> node, Node<T> searchNode) {
+    private Optional<Node<E>> search0(Node<E> node, Node<E> searchNode) {
         if (node != null) {
             if (node.equals(searchNode)) {
                 return Optional.of(node);
             } else {
-                Optional<Node<T>> leftNode = search0(node.getLeft(), searchNode);
-                Optional<Node<T>> rightNode = search0(node.getRight(), searchNode);
+                Optional<Node<E>> leftNode = search0(node.getLeft(), searchNode);
+                Optional<Node<E>> rightNode = search0(node.getRight(), searchNode);
                 return leftNode.isPresent() ? leftNode : rightNode;
             }
         }
@@ -102,12 +104,12 @@ public class BinaryTree<T> extends AbstractTree<T> {
     }
 
     @Override
-    public void remove(T value) {
+    public void remove(E value) {
         super.remove(value);
         setRootNode(delete0(getRootNode(), new Node<>(value)));
     }
 
-    private Node<T> delete0(Node<T> node, Node<T> toBeDelete) {
+    private Node<E> delete0(Node<E> node, Node<E> toBeDelete) {
         if (node == null) {
             return node;
         } else if (node.equals(toBeDelete)) {
@@ -124,5 +126,45 @@ public class BinaryTree<T> extends AbstractTree<T> {
             node.setRight(delete0(node.getRight(), toBeDelete));
         }
         return node;
+    }
+
+    @Override
+    public void insert(E... elements) {
+
+    }
+
+    @Override
+    public void delete(E... elements) {
+
+    }
+
+    @Override
+    public Stream<E> preOrderTraverseStream() {
+        return null;
+    }
+
+    @Override
+    public Stream<E> inOrderTraverseStream() {
+        return null;
+    }
+
+    @Override
+    public Stream<E> postOrderTraverseStream() {
+        return null;
+    }
+
+    @Override
+    public List<E> preOrderTraverse() {
+        return null;
+    }
+
+    @Override
+    public List<E> postOrderTraverse() {
+        return null;
+    }
+
+    @Override
+    public List<E> inOrderTraverse() {
+        return null;
     }
 }

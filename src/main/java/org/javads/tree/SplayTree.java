@@ -1,4 +1,4 @@
-package org.javads.internal.tree;
+package org.javads.tree;
 
 import java.util.Optional;
 
@@ -8,33 +8,33 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class SplayTree<T extends Comparable<? super T>> extends BSTree<T> {
+public class SplayTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
 
     public SplayTree() {
         super();
     }
 
     @Override
-    public Optional<Node<T>> search(T value) {
-        Optional<Node<T>> result = super.search(value);
+    public Optional<Node<E>> search(E value) {
+        Optional<Node<E>> result = super.search(value);
         setRootNode(splayTheTree(getRootNode(), new Node<>(value)));
         return result;
     }
 
     @Override
-    public Node<T> insert(T value) {
-        Node<T> newNode = super.insert(value);
+    public Node<E> insert(E value) {
+        Node<E> newNode = super.insert(value);
         setRootNode(splayTheTree(getRootNode(), newNode));
         return newNode;
     }
 
     @Override
-    public void remove(T value) {
-        Node<T> nodeToDelete = new Node<>(value);
+    public void remove(E value) {
+        Node<E> nodeToDelete = new Node<>(value);
         setRootNode(splayTheTree(getRootNode(), nodeToDelete));
         if (getRootNode().getData().compareTo(nodeToDelete.getData()) == 0) {
-            Node<T> leftSubTree = getRootNode().getLeft();
-            Node<T> rightSubTree = getRootNode().getRight();
+            Node<E> leftSubTree = getRootNode().getLeft();
+            Node<E> rightSubTree = getRootNode().getRight();
             leftSubTree = splayTheTree(leftSubTree, maxValueNode(leftSubTree));
             if (leftSubTree != null) {
                 leftSubTree.setRight(rightSubTree);
@@ -45,14 +45,14 @@ public class SplayTree<T extends Comparable<? super T>> extends BSTree<T> {
         }
     }
 
-    private Node<T> maxValueNode(Node<T> node) {
+    private Node<E> maxValueNode(Node<E> node) {
         while (node != null && node.getRight() != null) {
             node = maxValueNode(node.getRight());
         }
         return node;
     }
 
-    private Node<T> splayTheTree(Node<T> tNode, Node<T> node) {
+    private Node<E> splayTheTree(Node<E> tNode, Node<E> node) {
         if (tNode == null || tNode.getData().compareTo(node.getData()) == 0) {
             return tNode;
         }
@@ -87,17 +87,17 @@ public class SplayTree<T extends Comparable<? super T>> extends BSTree<T> {
         }
     }
 
-    private Node<T> rotateRight(Node<T> y) {
-        Node<T> x = y.getLeft();
-        Node<T> z = x.getRight();
+    private Node<E> rotateRight(Node<E> y) {
+        Node<E> x = y.getLeft();
+        Node<E> z = x.getRight();
         x.setRight(y);
         y.setLeft(z);
         return x;
     }
 
-    private Node<T> rotateLeft(Node<T> y) {
-        Node<T> x = y.getRight();
-        Node<T> z = x.getLeft();
+    private Node<E> rotateLeft(Node<E> y) {
+        Node<E> x = y.getRight();
+        Node<E> z = x.getLeft();
         x.setLeft(y);
         y.setRight(z);
         return x;

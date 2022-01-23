@@ -1,4 +1,4 @@
-package org.javads.internal.queue;
+package org.javads.queue;
 
 import org.javads.internal.ArrayStorage;
 
