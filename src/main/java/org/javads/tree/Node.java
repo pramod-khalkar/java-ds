@@ -8,7 +8,7 @@ import java.util.Objects;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class Node<T> {
+class Node<T> {
     private T data;
     private Node<T> left;
     private Node<T> right;

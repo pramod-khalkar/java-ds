@@ -6,6 +6,6 @@ package org.javads.tree;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public enum NodePosition {
+public enum Side {
     RIGHT, LEFT;
 }

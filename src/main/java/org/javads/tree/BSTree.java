@@ -2,13 +2,8 @@ package org.javads.tree;
 
 import static java.util.Optional.empty;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Date: 05/01/22
@@ -16,9 +11,9 @@ import java.util.stream.Stream;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class BinarySearchTree<E extends Comparable<? super E>> extends AbstractTree<E> {
+public class BSTree<E extends Comparable<? super E>> extends AbstractBinaryTree<E> {
 
-    public BinarySearchTree() {
+    public BSTree() {
         super();
     }
 
@@ -98,90 +93,5 @@ public class BinarySearchTree<E extends Comparable<? super E>> extends AbstractT
             node = node.getLeft();
         }
         return minVal;
-    }
-
-    @Override
-    public List<E> preOrderTraverse() {
-        if (getRootNode() == null) {
-            return Collections.emptyList();
-        } else {
-            List<E> list = new ArrayList<>();
-            preOrderTraverse0(getRootNode(), list);
-            return list;
-        }
-    }
-
-    @Override
-    public List<E> postOrderTraverse() {
-        if (getRootNode() == null) {
-            return Collections.emptyList();
-        } else {
-            List<E> list = new ArrayList<>();
-            postOrderTraverse0(getRootNode(), list);
-            return list;
-        }
-    }
-
-    @Override
-    public List<E> inOrderTraverse() {
-        if (getRootNode() == null) {
-            return Collections.emptyList();
-        } else {
-            List<E> list = new ArrayList<>();
-            inOrderTraverse0(getRootNode(), list);
-            return list;
-        }
-    }
-
-    private void inOrderTraverse0(Node<E> tNode, List<E> list) {
-        if (tNode == null) {
-            return;
-        }
-        inOrderTraverse0(tNode.getLeft(), list);
-        list.add(tNode.getData());
-        inOrderTraverse0(tNode.getRight(), list);
-    }
-
-    private void preOrderTraverse0(Node<E> tNode, List<E> list) {
-        if (tNode == null) {
-            return;
-        }
-        list.add(tNode.getData());
-        preOrderTraverse0(tNode.getLeft(), list);
-        preOrderTraverse0(tNode.getRight(), list);
-    }
-
-    private void postOrderTraverse0(Node<E> tNode, List<E> list) {
-        if (tNode == null) {
-            return;
-        }
-        postOrderTraverse0(tNode.getLeft(), list);
-        postOrderTraverse0(tNode.getRight(), list);
-        list.add(tNode.getData());
-    }
-
-    @SafeVarargs
-    public final void insert(E... elements) {
-        Arrays.stream(elements).forEach(this::insert);
-    }
-
-    @SafeVarargs
-    public final void delete(E... elements) {
-        Arrays.stream(elements).forEach(this::remove);
-    }
-
-    @Override
-    public Stream<E> preOrderTraverseStream() {
-        return preOrderTraverse().stream();
-    }
-
-    @Override
-    public Stream<E> inOrderTraverseStream() {
-        return inOrderTraverse().stream();
-    }
-
-    @Override
-    public Stream<E> postOrderTraverseStream() {
-        return postOrderTraverse().stream();
     }
 }

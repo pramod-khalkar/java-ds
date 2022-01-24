@@ -8,7 +8,7 @@ import java.util.Random;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class Treap<E extends Comparable<? super E>> extends BinarySearchTree<E> {
+public class Treap<E extends Comparable<? super E>> extends BSTree<E> implements TreapTree<E> {
 
     private final Random random = new Random();
 
@@ -23,6 +23,7 @@ public class Treap<E extends Comparable<? super E>> extends BinarySearchTree<E> 
         return newNode;
     }
 
+    @Override
     public Node<E> insert(E value, int priority) {
         TreapNode<E> newNode = new TreapNode<>(value, priority);
         setRootNode(isEmpty() ? newNode : insert0((TreapNode<E>) getRootNode(), newNode));
@@ -100,7 +101,7 @@ public class Treap<E extends Comparable<? super E>> extends BinarySearchTree<E> 
     }
 
     class TreapNode<T> extends Node<T> {
-        private int priority;
+        private final int priority;
 
         public TreapNode(T data, int priority) {
             super(data);

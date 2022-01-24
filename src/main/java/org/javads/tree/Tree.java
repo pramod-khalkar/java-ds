@@ -1,8 +1,6 @@
 package org.javads.tree;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 import org.javads.Algorithm;
 
 /**
@@ -26,16 +24,4 @@ public interface Tree<E> extends Algorithm {
     void insert(E... elements);
 
     void delete(E... elements);
-
-    Stream<E> preOrderTraverseStream();
-
-    Stream<E> inOrderTraverseStream();
-
-    Stream<E> postOrderTraverseStream();
-
-    List<E> preOrderTraverse();
-
-    List<E> postOrderTraverse();
-
-    List<E> inOrderTraverse();
 }

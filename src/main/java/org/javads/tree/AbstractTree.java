@@ -9,7 +9,7 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public abstract class AbstractTree<E> implements Tree<E> {
+abstract class AbstractTree<E> implements Tree<E> {
     private Node<E> root;
 
     protected AbstractTree() {

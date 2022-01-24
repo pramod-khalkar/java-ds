@@ -8,7 +8,7 @@ import org.javads.internal.ArrayStorage;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public abstract class AbstractQueue<T> extends ArrayStorage<T> {
+abstract class AbstractQueue<T> extends ArrayStorage<T> {
     protected int front, rear;
 
     protected AbstractQueue(int capacity) {

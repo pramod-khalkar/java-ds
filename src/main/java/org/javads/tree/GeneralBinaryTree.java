@@ -1,13 +1,8 @@
-package org.javads.tree.unbalance;
+package org.javads.tree;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Random;
-import java.util.stream.Stream;
-import org.javads.tree.AbstractTree;
-import org.javads.tree.Node;
-import org.javads.tree.NodePosition;
 
 /**
  * Date: 04/01/22
@@ -15,11 +10,11 @@ import org.javads.tree.NodePosition;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class BinaryTree<E> extends AbstractTree<E> {
+public class GeneralBinaryTree<E> extends AbstractBinaryTree<E> implements UnBalanceBinaryTree<E> {
 
     private final Random random;
 
-    public BinaryTree() {
+    public GeneralBinaryTree() {
         super();
         random = new Random();
     }
@@ -27,25 +22,25 @@ public class BinaryTree<E> extends AbstractTree<E> {
     @Override
     public Node<E> insert(E value) {
         Node<E> newNode = super.insert(value);
-        Node<E> tNode = randomInsert(getRootNode(), newNode, (random.nextInt(2) == 0) ? NodePosition.LEFT : NodePosition.RIGHT);
+        Node<E> tNode = randomInsert(getRootNode(), newNode, (random.nextInt(2) == 0) ? Side.LEFT : Side.RIGHT);
         setRootNode(tNode);
         return newNode;
     }
 
-    private Node<E> randomInsert(Node<E> node, Node<E> newNode, NodePosition nodePosition) {
+    private Node<E> randomInsert(Node<E> node, Node<E> newNode, Side side) {
         if (node == null) {
             return newNode;
-        } else if (nodePosition == NodePosition.LEFT) {
+        } else if (side == Side.LEFT) {
             if (node.getLeft() == null) {
-                node.setLeft(randomInsert(node.getLeft(), newNode, nodePosition));
+                node.setLeft(randomInsert(node.getLeft(), newNode, side));
             } else {
-                node.setRight(randomInsert(node.getRight(), newNode, nodePosition));
+                node.setRight(randomInsert(node.getRight(), newNode, side));
             }
-        } else if (nodePosition == NodePosition.RIGHT) {
+        } else if (side == Side.RIGHT) {
             if (node.getRight() == null) {
-                node.setRight(randomInsert(node.getRight(), newNode, nodePosition));
+                node.setRight(randomInsert(node.getRight(), newNode, side));
             } else {
-                node.setLeft(randomInsert(node.getLeft(), newNode, nodePosition));
+                node.setLeft(randomInsert(node.getLeft(), newNode, side));
             }
         } else {
             throw new RuntimeException(String.format("Duplicate value %s", newNode.getData()));
@@ -53,7 +48,8 @@ public class BinaryTree<E> extends AbstractTree<E> {
         return node;
     }
 
-    public Node<E> insert(E value, E parent, NodePosition nodePosition) {
+    @Override
+    public Node<E> insert(E value, E parent, Side side) {
         Objects.requireNonNull(value);
         Objects.requireNonNull(parent);
         Node<E> newNode = new Node<>(value);
@@ -62,7 +58,7 @@ public class BinaryTree<E> extends AbstractTree<E> {
         } else {
             Optional<Node<E>> parentNode = search0(getRootNode(), new Node<>(parent));
             if (parentNode.isPresent()) {
-                parentInsert(newNode, parentNode.get(), nodePosition);
+                parentInsert(newNode, parentNode.get(), side);
             } else {
                 throw new RuntimeException(String.format("Parent node not available %s", parent));
             }
@@ -70,16 +66,16 @@ public class BinaryTree<E> extends AbstractTree<E> {
         return newNode;
     }
 
-    private void parentInsert(Node<E> newNode, Node<E> parentNode, NodePosition nodePosition) {
+    private void parentInsert(Node<E> newNode, Node<E> parentNode, Side side) {
         if (parentNode.equals(newNode)) {
             throw new RuntimeException(String.format("Duplicate value %s", newNode.getData()));
         } else {
-            if (nodePosition == NodePosition.LEFT && parentNode.getLeft() == null) {
+            if (side == Side.LEFT && parentNode.getLeft() == null) {
                 parentNode.setLeft(newNode);
-            } else if (nodePosition == NodePosition.RIGHT && parentNode.getRight() == null) {
+            } else if (side == Side.RIGHT && parentNode.getRight() == null) {
                 parentNode.setRight(newNode);
             } else {
-                throw new RuntimeException(String.format("Parent %s already has %s node", newNode.getData(), nodePosition));
+                throw new RuntimeException(String.format("Parent %s already has %s node", newNode.getData(), side));
             }
         }
     }
@@ -126,45 +122,5 @@ public class BinaryTree<E> extends AbstractTree<E> {
             node.setRight(delete0(node.getRight(), toBeDelete));
         }
         return node;
-    }
-
-    @Override
-    public void insert(E... elements) {
-
-    }
-
-    @Override
-    public void delete(E... elements) {
-
-    }
-
-    @Override
-    public Stream<E> preOrderTraverseStream() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> inOrderTraverseStream() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> postOrderTraverseStream() {
-        return null;
-    }
-
-    @Override
-    public List<E> preOrderTraverse() {
-        return null;
-    }
-
-    @Override
-    public List<E> postOrderTraverse() {
-        return null;
-    }
-
-    @Override
-    public List<E> inOrderTraverse() {
-        return null;
     }
 }

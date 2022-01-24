@@ -1,13 +1,19 @@
 package org.javads;
 
+import org.javads.queue.Queue;
 import org.javads.queue.SimpleQueue;
 import org.javads.stack.SimpleStack;
+import org.javads.stack.Stack;
 import org.javads.tree.AvlTree;
-import org.javads.tree.BinarySearchTree;
+import org.javads.tree.BSTree;
+import org.javads.tree.BinaryTree;
+import org.javads.tree.GeneralBinaryTree;
+import org.javads.tree.GeneralNaryTree;
 import org.javads.tree.SplayTree;
 import org.javads.tree.Treap;
-import org.javads.tree.unbalance.BinaryTree;
-import org.javads.tree.unbalance.GeneralTree;
+import org.javads.tree.TreapTree;
+import org.javads.tree.UnBalanceBinaryTree;
+import org.javads.tree.UnBalanceNaryTree;
 
 /**
  * Date: 23/01/22
@@ -17,35 +23,35 @@ import org.javads.tree.unbalance.GeneralTree;
  */
 public class JavaDs {
 
-    public static <E> SimpleQueue<E> buildRegularQueue() {
+    public static <E> Queue<E> buildRegularQueue() {
         return new SimpleQueue<>();
     }
 
-    public static <E> SimpleStack<E> buildRegularStack() {
+    public static <E> Stack<E> buildRegularStack() {
         return new SimpleStack<>();
     }
 
-    public static <E extends Comparable<? super E>> BinarySearchTree<E> buildBinarySearchTree() {
-        return new BinarySearchTree<>();
+    public static <E extends Comparable<? super E>> BinaryTree<E> buildBinarySearchTree() {
+        return new BSTree<>();
     }
 
-    public static <E extends Comparable<? super E>> AvlTree<E> buildAvlTree() {
+    public static <E extends Comparable<? super E>> BinaryTree<E> buildAvlTree() {
         return new AvlTree<>();
     }
 
-    public static <E extends Comparable<? super E>> SplayTree<E> buildSplayTree() {
+    public static <E extends Comparable<? super E>> BinaryTree<E> buildSplayTree() {
         return new SplayTree<>();
     }
 
-    public static <E extends Comparable<? super E>> Treap<E> buildTreap() {
+    public static <E extends Comparable<? super E>> TreapTree<E> buildTreap() {
         return new Treap<>();
     }
 
-    public static <E> GeneralTree<E> buildGeneralTree() {
-        return new GeneralTree<>();
+    public static <E> UnBalanceNaryTree<E> buildGeneralNaryTree() {
+        return new GeneralNaryTree<>();
     }
 
-    public static <E> BinaryTree<E> buildBinaryTree() {
-        return new BinaryTree<>();
+    public static <E> UnBalanceBinaryTree<E> buildBinaryTree() {
+        return new GeneralBinaryTree<>();
     }
 }

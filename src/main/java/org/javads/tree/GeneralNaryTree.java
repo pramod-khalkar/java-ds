@@ -1,10 +1,8 @@
-package org.javads.tree.unbalance;
+package org.javads.tree;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
-import org.javads.tree.AbstractTree;
-import org.javads.tree.Node;
 
 /**
  * Date: 01/01/22
@@ -12,9 +10,9 @@ import org.javads.tree.Node;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class GeneralTree<E> extends AbstractTree<E> {
+public class GeneralNaryTree<E> extends AbstractTree<E> implements UnBalanceNaryTree<E> {
 
-    public GeneralTree() {
+    public GeneralNaryTree() {
         super();
     }
 
@@ -23,6 +21,7 @@ public class GeneralTree<E> extends AbstractTree<E> {
         return insert(value, !isEmpty() ? getRootNode().getData() : value);
     }
 
+    @Override
     public Node<E> insert(E value, E parent) {
         Node<E> newGNode = new Node<>(value);
         Node<E> parentGNode = new Node<>(parent);
@@ -109,43 +108,19 @@ public class GeneralTree<E> extends AbstractTree<E> {
         return Optional.empty();
     }
 
+    @SafeVarargs
     @Override
-    public void insert(E... elements) {
-
+    public final void insert(E... elements) {
+        Arrays.stream(elements).forEach(this::insert);
     }
 
+    @SafeVarargs
     @Override
-    public void delete(E... elements) {
-
+    public final void delete(E... elements) {
+        Arrays.stream(elements).forEach(this::delete);
     }
 
-    @Override
-    public Stream<E> preOrderTraverseStream() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> inOrderTraverseStream() {
-        return null;
-    }
-
-    @Override
-    public Stream<E> postOrderTraverseStream() {
-        return null;
-    }
-
-    @Override
-    public List<E> preOrderTraverse() {
-        return null;
-    }
-
-    @Override
-    public List<E> postOrderTraverse() {
-        return null;
-    }
-
-    @Override
-    public List<E> inOrderTraverse() {
-        return null;
+    public final void insert(Map<E, E> childParentRelation) {
+        childParentRelation.forEach(this::insert);
     }
 }

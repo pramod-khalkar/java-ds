@@ -8,7 +8,7 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class SplayTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
+public class SplayTree<E extends Comparable<? super E>> extends BSTree<E> {
 
     public SplayTree() {
         super();
