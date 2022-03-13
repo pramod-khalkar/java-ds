@@ -9,6 +9,7 @@ import org.javads.tree.BSTree;
 import org.javads.tree.BinaryTree;
 import org.javads.tree.GeneralBinaryTree;
 import org.javads.tree.GeneralNaryTree;
+import org.javads.tree.RedBlackTree;
 import org.javads.tree.SplayTree;
 import org.javads.tree.Treap;
 import org.javads.tree.TreapTree;
@@ -53,5 +54,9 @@ public class JavaDs {
 
     public static <E> UnBalanceBinaryTree<E> buildBinaryTree() {
         return new GeneralBinaryTree<>();
+    }
+
+    public static <E extends Comparable<? super E>> BinaryTree<E> buildRedBlackTree() {
+        return new RedBlackTree<>();
     }
 }

@@ -26,6 +26,7 @@ public class TreeTest {
         // TODO: 23/01/22 Need to implement other supported methods
         UnBalanceNaryTree<Integer> gTree = JavaDs.buildGeneralNaryTree();
         UnBalanceBinaryTree<Integer> bTree = new GeneralBinaryTree<>();
+        BinaryTree<Integer> rbTree = JavaDs.buildRedBlackTree();
 
         // Binary tree test
         bsTree.insert(elements);
@@ -53,5 +54,20 @@ public class TreeTest {
         assertArrayEquals(eTreap.preOrderTraverse().toArray(new Integer[0]), new Integer[] {40, 20, 10, 30, 50});
         assertArrayEquals(eTreap.inOrderTraverse().toArray(new Integer[0]), new Integer[] {10, 20, 30, 40, 50});
         assertArrayEquals(eTreap.postOrderTraverse().toArray(new Integer[0]), new Integer[] {10, 30, 20, 50, 40});
+
+        //Red black tree test
+        rbTree.insert(elements);
+        assertArrayEquals(rbTree.preOrderTraverse().toArray(new Integer[0]), new Integer[] {20, 10, 40, 30, 50});
+        assertArrayEquals(rbTree.inOrderTraverse().toArray(new Integer[0]), new Integer[] {10, 20, 30, 40, 50});
+        assertArrayEquals(rbTree.postOrderTraverse().toArray(new Integer[0]), new Integer[] {10, 30, 50, 40, 20});
+    }
+
+
+    @Test
+    public void test() {
+        BinaryTree<Integer> rb = JavaDs.buildRedBlackTree();
+        rb.insert(10, 30, 20, 40, 50);
+        System.out.println(rb.preOrderTraverse());
+        //System.out.println(rb.preOrderTraverse());
     }
 }
