@@ -11,6 +11,8 @@ import org.javads.Algorithm;
  */
 public interface Tree<E> extends Algorithm {
 
+    Node<E> getRootNode();
+
     Optional<Node<E>> search(E value);
 
     Node<E> insert(E value);
