@@ -21,7 +21,8 @@ abstract class AbstractTree<E> implements Tree<E> {
         return getRootNode() == null;
     }
 
-    protected Node<E> getRootNode() {
+    @Override
+    public Node<E> getRootNode() {
         return this.root;
     }
 

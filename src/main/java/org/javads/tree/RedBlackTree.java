@@ -60,6 +60,9 @@ public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
     }
 
     private void checkRbPropertiesAfterInsert(RbNode<E> node) {
+        if (node.getData().equals(12)) {
+            System.out.println(node.getData());
+        }
         RbNode<E> parent, gparent;
         while (((parent = parentOf(node)) != null) && isRed(parent)) {
             gparent = parentOf(parent);
@@ -72,7 +75,7 @@ public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
                     node = gparent;
                     continue;
                 }
-                if (parent.getRight().equals(node)) {
+                if (parent.getRight() != null && parent.getRight().equals(node)) {
                     RbNode<E> tmp;
                     rotateLeft(parent);
                     tmp = parent;
@@ -330,7 +333,7 @@ public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
         }
     }
 
-    static class RbNode<E> extends Node<E> {
+    public static class RbNode<E> extends Node<E> {
         private Color color;
         private RbNode<E> parent;
 
@@ -370,7 +373,7 @@ public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
         }
     }
 
-    enum Color {
+    public enum Color {
         RED, BLACK;
     }
 }

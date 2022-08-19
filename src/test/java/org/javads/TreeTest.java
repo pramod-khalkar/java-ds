@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
  * Author: Pramod Khalkar
  */
 public class TreeTest {
+
     @Test
     public void all_tree_traversal_test() {
         Integer[] elements = new Integer[] {10, 30, 20, 40, 50};
@@ -66,8 +67,6 @@ public class TreeTest {
     @Test
     public void test() {
         BinaryTree<Integer> rb = JavaDs.buildRedBlackTree();
-        rb.insert(10, 30, 20, 40, 50);
-        System.out.println(rb.preOrderTraverse());
-        //System.out.println(rb.preOrderTraverse());
+        rb.insert(44,1000,0,12,5,45,1,0,12,23,56,8,2,8);
     }
 }
