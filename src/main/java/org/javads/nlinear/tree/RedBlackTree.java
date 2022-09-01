@@ -1,7 +1,7 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
-import static org.javads.tree.RedBlackTree.Color.BLACK;
-import static org.javads.tree.RedBlackTree.Color.RED;
+import static org.javads.nlinear.tree.RedBlackTree.Color.BLACK;
+import static org.javads.nlinear.tree.RedBlackTree.Color.RED;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -15,23 +15,22 @@ import java.util.Optional;
  * https://codetube.vn/visual/redblacktree/
  * https://www.fatalerrors.org/a/principle-and-implementation-of-red-black-tree.html
  */
-public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
+public class RedBlackTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
 
     public RedBlackTree() {
         super();
     }
 
     @Override
-    public Optional<Node<E>> search(E value) {
+    public Optional<E> search(E value) {
         return super.search(value);
     }
 
     @Override
-    public Node<E> insert(E value) {
+    public void insert(E value) {
         Objects.requireNonNull(value);
         RbNode<E> newNode = new RbNode<>(value);
         insertRbNode(newNode);
-        return newNode;
     }
 
     private void insertRbNode(RbNode<E> newNode) {
@@ -159,8 +158,8 @@ public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
     @Override
     public void remove(E value) {
         Objects.requireNonNull(value);
-        Optional<Node<E>> tobeDeleted = search(value);
-        tobeDeleted.ifPresent(eNode -> deleteRbNode((RbNode<E>) eNode));
+        Optional<BiNode<E>> sNode = search0((BiNode<E>) getRootNode(), new RbNode<>(value));
+        sNode.ifPresent(eNode -> deleteRbNode((RbNode<E>) eNode));
     }
 
     private void deleteRbNode(RbNode<E> node) {
@@ -333,7 +332,7 @@ public class RedBlackTree<E extends Comparable<? super E>> extends BSTree<E> {
         }
     }
 
-    public static class RbNode<E> extends Node<E> {
+    public static class RbNode<E> extends BiNode<E> {
         private Color color;
         private RbNode<E> parent;
 

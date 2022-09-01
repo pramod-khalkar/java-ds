@@ -1,4 +1,4 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -9,18 +9,17 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class AvlTree<E extends Comparable<? super E>> extends BSTree<E> {
+public class AvlTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
 
     public AvlTree() {
         super();
     }
 
     @Override
-    public Node<E> insert(E value) {
+    public void insert(E value) {
         Objects.requireNonNull(value);
         AvlNode<E> newNode = new AvlNode<>(value);
         setRootNode(insert0((AvlNode<E>) getRootNode(), newNode));
-        return newNode;
     }
 
     AvlNode<E> insert0(AvlNode<E> tNode, AvlNode<E> newNode) {
@@ -57,11 +56,11 @@ public class AvlTree<E extends Comparable<? super E>> extends BSTree<E> {
         return z;
     }
 
-    protected <E> int balanceFactorOf(Node<E> node) {
+    protected <E> int balanceFactorOf(BiNode<E> node) {
         return heightOf(node.getLeft()) - heightOf(node.getRight());
     }
 
-    protected <E> int heightOf(Node<E> tNode) {
+    protected <E> int heightOf(BiNode<E> tNode) {
         int height = 0;
         if (tNode == null) {
             height = -1;
@@ -98,11 +97,11 @@ public class AvlTree<E extends Comparable<? super E>> extends BSTree<E> {
     }
 
     @Override
-    public Optional<Node<E>> search(E value) {
+    public Optional<E> search(E value) {
         return super.search(value);
     }
 
-    class AvlNode<T> extends Node<T> {
+    public class AvlNode<T> extends BiNode<T> {
         private int height;
 
         public AvlNode(T data) {

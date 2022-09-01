@@ -1,20 +1,16 @@
 package org.javads;
 
-import org.javads.queue.Queue;
-import org.javads.queue.SimpleQueue;
-import org.javads.stack.SimpleStack;
-import org.javads.stack.Stack;
-import org.javads.tree.AvlTree;
-import org.javads.tree.BSTree;
-import org.javads.tree.BinaryTree;
-import org.javads.tree.GeneralBinaryTree;
-import org.javads.tree.GeneralNaryTree;
-import org.javads.tree.RedBlackTree;
-import org.javads.tree.SplayTree;
-import org.javads.tree.Treap;
-import org.javads.tree.TreapTree;
-import org.javads.tree.UnBalanceBinaryTree;
-import org.javads.tree.UnBalanceNaryTree;
+import org.javads.nlinear.tree.AvlTree;
+import org.javads.nlinear.tree.BinarySearchTree;
+import org.javads.nlinear.tree.BiTree;
+import org.javads.nlinear.tree.GeneralBinaryTree;
+import org.javads.nlinear.tree.GeneralNaryTree;
+import org.javads.nlinear.tree.RedBlackTree;
+import org.javads.nlinear.tree.SplayTree;
+import org.javads.nlinear.tree.Treap;
+import org.javads.nlinear.tree.TreapTree;
+import org.javads.nlinear.tree.UnBalanceBiTree;
+import org.javads.nlinear.tree.UnBalanceNaryTree;
 
 /**
  * Date: 23/01/22
@@ -24,39 +20,60 @@ import org.javads.tree.UnBalanceNaryTree;
  */
 public class JavaDs {
 
-    public static <E> Queue<E> buildRegularQueue() {
-        return new SimpleQueue<>();
+    /**
+     * @param <E> Type of element
+     * @return create instance of BST (Binary Search Tree)
+     */
+    public static <E extends Comparable<? super E>> BiTree<E> buildBinarySearchTree() {
+        return new BinarySearchTree<>();
     }
 
-    public static <E> Stack<E> buildRegularStack() {
-        return new SimpleStack<>();
-    }
-
-    public static <E extends Comparable<? super E>> BinaryTree<E> buildBinarySearchTree() {
-        return new BSTree<>();
-    }
-
-    public static <E extends Comparable<? super E>> BinaryTree<E> buildAvlTree() {
+    /**
+     * @param <E> Type of element
+     * @return create instance of AVL tree
+     */
+    public static <E extends Comparable<? super E>> BiTree<E> buildAvlTree() {
         return new AvlTree<>();
     }
 
-    public static <E extends Comparable<? super E>> BinaryTree<E> buildSplayTree() {
+    /**
+     * @param <E> Type of element
+     * @return create instance of Splay tree
+     */
+
+    public static <E extends Comparable<? super E>> BiTree<E> buildSplayTree() {
         return new SplayTree<>();
     }
 
+    /**
+     * @param <E> Type of element
+     * @return create instance of Treap tree
+     */
     public static <E extends Comparable<? super E>> TreapTree<E> buildTreap() {
         return new Treap<>();
     }
 
+    /**
+     * @param <E> Type of element
+     * @return create instance of General N-Array Tree
+     */
     public static <E> UnBalanceNaryTree<E> buildGeneralNaryTree() {
         return new GeneralNaryTree<>();
     }
 
-    public static <E> UnBalanceBinaryTree<E> buildBinaryTree() {
+    /**
+     * @param <E> Type of element
+     * @return create instance of General Binary Tree
+     */
+    public static <E> UnBalanceBiTree<E> buildBinaryTree() {
         return new GeneralBinaryTree<>();
     }
 
-    public static <E extends Comparable<? super E>> BinaryTree<E> buildRedBlackTree() {
+    /**
+     * @param <E> Type of element
+     * @return create instance of Red Black Tree
+     */
+    public static <E extends Comparable<? super E>> BiTree<E> buildRedBlackTree() {
         return new RedBlackTree<>();
     }
 }

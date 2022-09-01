@@ -1,6 +1,7 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
 import java.util.Objects;
+import org.javads.nlinear.Node;
 
 /**
  * Date: 05/01/22
@@ -8,44 +9,44 @@ import java.util.Objects;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class Node<T> {
+public class BiNode<T> implements Node {
     private T data;
-    private Node<T> left;
-    private Node<T> right;
+    private BiNode<T> left;
+    private BiNode<T> right;
 
-    public Node(T data) {
+    public BiNode(T data) {
         this.data = data;
         this.left = null;
         this.right = null;
     }
 
-    @Override
-    public String toString() {
-        return data.toString();
-    }
-
-    public Node<T> getLeft() {
-        return left;
-    }
-
-    public Node<T> getRight() {
-        return right;
-    }
-
-    public void setLeft(Node<T> left) {
-        this.left = left;
-    }
-
-    public void setRight(Node<T> right) {
-        this.right = right;
-    }
-
     public T getData() {
-        return this.data;
+        return data;
     }
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return this.data != null ? data.toString() : null;
+    }
+
+    public BiNode<T> getLeft() {
+        return left;
+    }
+
+    public BiNode<T> getRight() {
+        return right;
+    }
+
+    public void setLeft(BiNode<T> left) {
+        this.left = left;
+    }
+
+    public void setRight(BiNode<T> right) {
+        this.right = right;
     }
 
     @Override
@@ -59,7 +60,7 @@ public class Node<T> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        Node<T> node_ = (Node<T>) obj;
+        BiNode<T> node_ = (BiNode<T>) obj;
         return Objects.equals(this.data, node_.data);
     }
 }
