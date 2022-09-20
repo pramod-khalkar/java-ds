@@ -12,7 +12,7 @@ import org.javads.nlinear.Node;
  * description: This file belongs to java-ds
  * Source : https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=1158559
  **/
-public class BTree<E extends Comparable<E>> extends AbstractTree<E> {
+public class BTree<E extends Comparable<? super E>> extends AbstractTree<E> {
     public final static int REBALANCE_FOR_LEAF_NODE = 1;
     public final static int REBALANCE_FOR_INTERNAL_NODE = 2;
     private BTNode<E> mIntermediateInternalNode = null;

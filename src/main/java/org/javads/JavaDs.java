@@ -1,14 +1,16 @@
 package org.javads;
 
 import org.javads.nlinear.tree.AvlTree;
-import org.javads.nlinear.tree.BinarySearchTree;
+import org.javads.nlinear.tree.BTree;
 import org.javads.nlinear.tree.BiTree;
+import org.javads.nlinear.tree.BinarySearchTree;
 import org.javads.nlinear.tree.GeneralBinaryTree;
 import org.javads.nlinear.tree.GeneralNaryTree;
 import org.javads.nlinear.tree.RedBlackTree;
 import org.javads.nlinear.tree.SplayTree;
 import org.javads.nlinear.tree.Treap;
 import org.javads.nlinear.tree.TreapTree;
+import org.javads.nlinear.tree.Tree;
 import org.javads.nlinear.tree.UnBalanceBiTree;
 import org.javads.nlinear.tree.UnBalanceNaryTree;
 
@@ -75,5 +77,13 @@ public class JavaDs {
      */
     public static <E extends Comparable<? super E>> BiTree<E> buildRedBlackTree() {
         return new RedBlackTree<>();
+    }
+
+    /**
+     * @param <E> Type of element
+     * @return create instance of B Tree
+     */
+    public static <E extends Comparable<? super E>> Tree<E> buildBTree() {
+        return new BTree<>();
     }
 }
