@@ -1,4 +1,4 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -10,7 +10,7 @@ import java.util.Random;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class GeneralBinaryTree<E> extends AbstractBinaryTree<E> implements UnBalanceBinaryTree<E> {
+public class GeneralBinaryTree<E> extends AbstractBiTree<E> implements UnBalanceBiTree<E> {
 
     private final Random random;
 
@@ -20,23 +20,22 @@ public class GeneralBinaryTree<E> extends AbstractBinaryTree<E> implements UnBal
     }
 
     @Override
-    public Node<E> insert(E value) {
-        Node<E> newNode = super.insert(value);
-        Node<E> tNode = randomInsert(getRootNode(), newNode, (random.nextInt(2) == 0) ? Side.LEFT : Side.RIGHT);
+    public void insert(E value) {
+        Objects.requireNonNull(value);
+        BiNode<E> tNode = randomInsert((BiNode<E>) getRootNode(), new BiNode<>(value), (random.nextInt(2) == 0) ? BiSide.LEFT : BiSide.RIGHT);
         setRootNode(tNode);
-        return newNode;
     }
 
-    private Node<E> randomInsert(Node<E> node, Node<E> newNode, Side side) {
+    private BiNode<E> randomInsert(BiNode<E> node, BiNode<E> newNode, BiSide side) {
         if (node == null) {
             return newNode;
-        } else if (side == Side.LEFT) {
+        } else if (side == BiSide.LEFT) {
             if (node.getLeft() == null) {
                 node.setLeft(randomInsert(node.getLeft(), newNode, side));
             } else {
                 node.setRight(randomInsert(node.getRight(), newNode, side));
             }
-        } else if (side == Side.RIGHT) {
+        } else if (side == BiSide.RIGHT) {
             if (node.getRight() == null) {
                 node.setRight(randomInsert(node.getRight(), newNode, side));
             } else {
@@ -49,30 +48,29 @@ public class GeneralBinaryTree<E> extends AbstractBinaryTree<E> implements UnBal
     }
 
     @Override
-    public Node<E> insert(E value, E parent, Side side) {
+    public void insert(E value, E parent, BiSide side) {
         Objects.requireNonNull(value);
         Objects.requireNonNull(parent);
-        Node<E> newNode = new Node<>(value);
+        BiNode<E> newNode = new BiNode<>(value);
         if (isEmpty()) {
             setRootNode(newNode);
         } else {
-            Optional<Node<E>> parentNode = search0(getRootNode(), new Node<>(parent));
+            Optional<BiNode<E>> parentNode = search0((BiNode<E>) getRootNode(), new BiNode<>(parent));
             if (parentNode.isPresent()) {
                 parentInsert(newNode, parentNode.get(), side);
             } else {
                 throw new RuntimeException(String.format("Parent node not available %s", parent));
             }
         }
-        return newNode;
     }
 
-    private void parentInsert(Node<E> newNode, Node<E> parentNode, Side side) {
+    private void parentInsert(BiNode<E> newNode, BiNode<E> parentNode, BiSide side) {
         if (parentNode.equals(newNode)) {
             throw new RuntimeException(String.format("Duplicate value %s", newNode.getData()));
         } else {
-            if (side == Side.LEFT && parentNode.getLeft() == null) {
+            if (side == BiSide.LEFT && parentNode.getLeft() == null) {
                 parentNode.setLeft(newNode);
-            } else if (side == Side.RIGHT && parentNode.getRight() == null) {
+            } else if (side == BiSide.RIGHT && parentNode.getRight() == null) {
                 parentNode.setRight(newNode);
             } else {
                 throw new RuntimeException(String.format("Parent %s already has %s node", newNode.getData(), side));
@@ -81,18 +79,19 @@ public class GeneralBinaryTree<E> extends AbstractBinaryTree<E> implements UnBal
     }
 
     @Override
-    public Optional<Node<E>> search(E value) {
-        super.search(value);
-        return search0(getRootNode(), new Node<>(value));
+    public Optional<E> search(E value) {
+        Objects.requireNonNull(value);
+        Optional<BiNode<E>> sNode = search0((BiNode<E>) getRootNode(), new BiNode<>(value));
+        return sNode.map(BiNode::getData);
     }
 
-    private Optional<Node<E>> search0(Node<E> node, Node<E> searchNode) {
+    private Optional<BiNode<E>> search0(BiNode<E> node, BiNode<E> searchNode) {
         if (node != null) {
             if (node.equals(searchNode)) {
                 return Optional.of(node);
             } else {
-                Optional<Node<E>> leftNode = search0(node.getLeft(), searchNode);
-                Optional<Node<E>> rightNode = search0(node.getRight(), searchNode);
+                Optional<BiNode<E>> leftNode = search0(node.getLeft(), searchNode);
+                Optional<BiNode<E>> rightNode = search0(node.getRight(), searchNode);
                 return leftNode.isPresent() ? leftNode : rightNode;
             }
         }
@@ -101,11 +100,11 @@ public class GeneralBinaryTree<E> extends AbstractBinaryTree<E> implements UnBal
 
     @Override
     public void remove(E value) {
-        super.remove(value);
-        setRootNode(delete0(getRootNode(), new Node<>(value)));
+        Objects.requireNonNull(value);
+        setRootNode(delete0((BiNode<E>) getRootNode(), new BiNode<>(value)));
     }
 
-    private Node<E> delete0(Node<E> node, Node<E> toBeDelete) {
+    private BiNode<E> delete0(BiNode<E> node, BiNode<E> toBeDelete) {
         if (node == null) {
             return node;
         } else if (node.equals(toBeDelete)) {

@@ -1,4 +1,4 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
 import static java.util.Optional.empty;
 
@@ -11,19 +11,20 @@ import java.util.Optional;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class BSTree<E extends Comparable<? super E>> extends AbstractBinaryTree<E> {
+public class BinarySearchTree<E extends Comparable<? super E>> extends AbstractBiTree<E> {
 
-    public BSTree() {
+    public BinarySearchTree() {
         super();
     }
 
     @Override
-    public Optional<Node<E>> search(E value) {
+    public Optional<E> search(E value) {
         Objects.requireNonNull(value);
-        return search0(getRootNode(), new Node<>(value));
+        Optional<BiNode<E>> sNode = search0((BiNode<E>) getRootNode(), new BiNode<>(value));
+        return sNode.map(BiNode::getData);
     }
 
-    private Optional<Node<E>> search0(Node<E> tNode, Node<E> searchNode) {
+    protected Optional<BiNode<E>> search0(BiNode<E> tNode, BiNode<E> searchNode) {
         if (tNode != null) {
             if (tNode.getData().compareTo(searchNode.getData()) == 0) {
                 return Optional.of(tNode);
@@ -39,14 +40,12 @@ public class BSTree<E extends Comparable<? super E>> extends AbstractBinaryTree<
     }
 
     @Override
-    public Node<E> insert(E value) {
+    public void insert(E value) {
         Objects.requireNonNull(value);
-        Node<E> newNode = new Node<>(value);
-        setRootNode(insert0(getRootNode(), newNode));
-        return newNode;
+        setRootNode(insert0((BiNode<E>) getRootNode(), new BiNode<>(value)));
     }
 
-    private Node<E> insert0(Node<E> tNode, Node<E> newNode) {
+    private BiNode<E> insert0(BiNode<E> tNode, BiNode<E> newNode) {
         if (tNode == null) {
             return newNode;
         } else if (tNode.getData().compareTo(newNode.getData()) > 0) {
@@ -62,10 +61,10 @@ public class BSTree<E extends Comparable<? super E>> extends AbstractBinaryTree<
     @Override
     public void remove(E value) {
         Objects.requireNonNull(value);
-        delete0(getRootNode(), value);
+        delete0((BiNode<E>) getRootNode(), value);
     }
 
-    private Node<E> delete0(Node<E> tNode, E nodeTobeDeleted) {
+    private BiNode<E> delete0(BiNode<E> tNode, E nodeTobeDeleted) {
         if (tNode == null) {
             return tNode;
         }
@@ -86,7 +85,7 @@ public class BSTree<E extends Comparable<? super E>> extends AbstractBinaryTree<
         return tNode;
     }
 
-    private E minValue(Node<E> node) {
+    private E minValue(BiNode<E> node) {
         E minVal = node.getData();
         while (node.getLeft() != null) {
             minVal = node.getLeft().getData();

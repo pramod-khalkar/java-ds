@@ -1,4 +1,4 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
 /**
  * Date: 04/01/22
@@ -6,6 +6,6 @@ package org.javads.tree;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public enum Side {
+public enum BiSide {
     RIGHT, LEFT;
 }

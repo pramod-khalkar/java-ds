@@ -2,11 +2,13 @@ package org.javads;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-import org.javads.tree.BinaryTree;
-import org.javads.tree.GeneralBinaryTree;
-import org.javads.tree.TreapTree;
-import org.javads.tree.UnBalanceBinaryTree;
-import org.javads.tree.UnBalanceNaryTree;
+import org.javads.nlinear.tree.BTree;
+import org.javads.nlinear.tree.BiTree;
+import org.javads.nlinear.tree.GeneralBinaryTree;
+import org.javads.nlinear.tree.TreapTree;
+import org.javads.nlinear.tree.Tree;
+import org.javads.nlinear.tree.UnBalanceBiTree;
+import org.javads.nlinear.tree.UnBalanceNaryTree;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -20,14 +22,14 @@ public class TreeTest {
     @Test
     public void all_tree_traversal_test() {
         Integer[] elements = new Integer[] {10, 30, 20, 40, 50};
-        BinaryTree<Integer> bsTree = JavaDs.buildBinarySearchTree();
-        BinaryTree<Integer> eAvlTree = JavaDs.buildAvlTree();
-        BinaryTree<Integer> eSplayTree = JavaDs.buildSplayTree();
+        BiTree<Integer> bsTree = JavaDs.buildBinarySearchTree();
+        BiTree<Integer> eAvlTree = JavaDs.buildAvlTree();
+        BiTree<Integer> eSplayTree = JavaDs.buildSplayTree();
         TreapTree<Integer> eTreap = JavaDs.buildTreap();
         // TODO: 23/01/22 Need to implement other supported methods
         UnBalanceNaryTree<Integer> gTree = JavaDs.buildGeneralNaryTree();
-        UnBalanceBinaryTree<Integer> bTree = new GeneralBinaryTree<>();
-        BinaryTree<Integer> rbTree = JavaDs.buildRedBlackTree();
+        UnBalanceBiTree<Integer> bTree = new GeneralBinaryTree<>();
+        BiTree<Integer> rbTree = JavaDs.buildRedBlackTree();
 
         // Binary tree test
         bsTree.insert(elements);
@@ -63,10 +65,24 @@ public class TreeTest {
         assertArrayEquals(rbTree.postOrderTraverse().toArray(new Integer[0]), new Integer[] {10, 30, 50, 40, 20});
     }
 
+    @Test
+    public void general_nary_tree_test() {
+        //General Nary tree test
+        Tree<Integer> genAryTree = JavaDs.buildGeneralNaryTree();
+        genAryTree.insert(10);
+        genAryTree.insert(20, 10);
+        genAryTree.insert(30, 10);
+        genAryTree.insert(40, 10);
+        genAryTree.insert(1, 30);
+        genAryTree.insert(2, 40);
+        genAryTree.insert(3, 40);
+        genAryTree.search(3);
+    }
 
     @Test
     public void test() {
-        BinaryTree<Integer> rb = JavaDs.buildRedBlackTree();
-        rb.insert(44,1000,0,12,5,45,1,0,12,23,56,8,2,8);
+        Tree<Integer> tree = new BTree<>();
+        tree.insert(44, 1000, 0, 12, 5, 45, 1, 23, 56, 8, 2);
+        tree.insert(100);
     }
 }

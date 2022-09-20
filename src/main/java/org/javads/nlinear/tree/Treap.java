@@ -1,4 +1,4 @@
-package org.javads.tree;
+package org.javads.nlinear.tree;
 
 import java.util.Random;
 
@@ -8,7 +8,7 @@ import java.util.Random;
  * This file is project specific to java-ds
  * Author: Pramod Khalkar
  */
-public class Treap<E extends Comparable<? super E>> extends BSTree<E> implements TreapTree<E> {
+public class Treap<E extends Comparable<? super E>> extends BinarySearchTree<E> implements TreapTree<E> {
 
     private final Random random = new Random();
 
@@ -17,17 +17,15 @@ public class Treap<E extends Comparable<? super E>> extends BSTree<E> implements
     }
 
     @Override
-    public Node<E> insert(E value) {
+    public void insert(E value) {
         TreapNode<E> newNode = new TreapNode<>(value);
         setRootNode(isEmpty() ? newNode : insert0((TreapNode<E>) getRootNode(), newNode));
-        return newNode;
     }
 
     @Override
-    public Node<E> insert(E value, int priority) {
+    public void insert(E value, int priority) {
         TreapNode<E> newNode = new TreapNode<>(value, priority);
         setRootNode(isEmpty() ? newNode : insert0((TreapNode<E>) getRootNode(), newNode));
-        return newNode;
     }
 
     private TreapNode<E> insert0(TreapNode<E> tNode, TreapNode<E> newNode) {
@@ -50,17 +48,17 @@ public class Treap<E extends Comparable<? super E>> extends BSTree<E> implements
         return tNode;
     }
 
-    private Node<E> rotateRight(TreapNode<E> y) {
-        Node<E> x = y.getLeft();
-        Node<E> z = x.getRight();
+    private BiNode<E> rotateRight(TreapNode<E> y) {
+        BiNode<E> x = y.getLeft();
+        BiNode<E> z = x.getRight();
         x.setRight(y);
         y.setLeft(z);
         return x;
     }
 
-    private Node<E> rotateLeft(TreapNode<E> y) {
-        Node<E> x = y.getRight();
-        Node<E> z = x.getLeft();
+    private BiNode<E> rotateLeft(TreapNode<E> y) {
+        BiNode<E> x = y.getRight();
+        BiNode<E> z = x.getLeft();
         x.setLeft(y);
         y.setRight(z);
         return x;
@@ -100,7 +98,7 @@ public class Treap<E extends Comparable<? super E>> extends BSTree<E> implements
         return tNode;
     }
 
-    class TreapNode<T> extends Node<T> {
+    public class TreapNode<T> extends BiNode<T> {
         private final int priority;
 
         public TreapNode(T data, int priority) {
