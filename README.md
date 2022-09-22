@@ -24,7 +24,7 @@ Tree<Integer> eSplayTree = JavaDs.buildSplayTree();
 Tree<Integer> eTreap = JavaDs.buildTreap();
 ```
 
-Use below dependenct to use this
+Use below dependency to use this
 
 ```
 <dependency>
